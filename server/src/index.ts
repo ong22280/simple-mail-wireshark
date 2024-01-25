@@ -1,22 +1,25 @@
 import express from "express";
 import nodemailer from "nodemailer";
+import cors from "cors";
 
 const app = express();
 const port = 3001;
 
 app.use(express.json());
+app.use(cors());
 
 const transporter = nodemailer.createTransport({
   host: "smtp.resend.com",
   port: 25,
   auth: {
     user: "resend",
-    pass: "re_PmiWNMbF_Gdf6CLBane3REGBdA7eSmS6a",
+    pass: "",
   },
 });
 
 app.post("/send-mail", (req, res) => {
   const { from, subject, text } = req.body;
+  console.log(req.body);
 
   const mailOptions = {
     from,
@@ -28,9 +31,11 @@ app.post("/send-mail", (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
+      console.log(error);
       return res.status(500).send(error.toString());
     }
     res.status(200).send("Email sent: " + info.response);
+    console.log("Email sent: " + info.response);
   });
 });
 
