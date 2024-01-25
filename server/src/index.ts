@@ -7,21 +7,23 @@ const port = 3001;
 app.use(express.json());
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.resend.com",
+  port: 25,
   auth: {
-    user: "your-email@gmail.com",
-    pass: "your-email-password",
+    user: "resend",
+    pass: "re_PmiWNMbF_Gdf6CLBane3REGBdA7eSmS6a",
   },
 });
 
 app.post("/send-mail", (req, res) => {
-  const { to, subject, text } = req.body;
+  const { from, subject, text } = req.body;
 
   const mailOptions = {
-    from: "your-email@gmail.com",
-    to,
+    from,
+    to: "hemloun.s@gmail.com",
     subject,
     text,
+    html: "<h1>Hi there</h1><p>Thanks for testing my app!</p>",
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
