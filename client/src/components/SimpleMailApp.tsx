@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 
 const SimpleMailApp: React.FC = () => {
@@ -13,7 +14,7 @@ const SimpleMailApp: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: email,
+        from: email,
         subject,
         text: message,
       }),
@@ -27,26 +28,37 @@ const SimpleMailApp: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Simple Mail Application</h1>
+    <div className="p-4 max-w-md mx-auto bg-white rounded-md shadow-md mt-16">
+      <h1 className="text-2xl font-bold mb-4">Simple Mail Application</h1>
+      <label className="block mb-2 font-bold">Email</label>
       <input
         type="email"
-        placeholder="To"
+        placeholder="From"
+        className=" border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      <label className="block mb-2 font-bold">Subject</label>
       <input
         type="text"
         placeholder="Subject"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
       />
+      <label className="block mb-2 font-bold">Message</label>
       <textarea
         placeholder="Message"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={sendMail}>Send Email</button>
+      ></textarea>
+      <button
+        className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
+        onClick={sendMail}
+      >
+        Send Email
+      </button>
     </div>
   );
 };
