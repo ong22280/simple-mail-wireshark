@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SimpleMailApp: React.FC = () => {
   const [emailSender, setEmailSender] = useState("");
@@ -18,25 +20,43 @@ const SimpleMailApp: React.FC = () => {
         from: emailSender,
         to: emailReceiver,
         subject,
-        text: message,
+        message: message,
       }),
     });
 
     if (response.ok) {
-      console.log("Email sent successfully");
+      toast.success(
+        `httpStatus ${response.status}, ` +
+          " " +
+          `statusText ${response.statusText}, ` +
+          " " +
+          `${response.url}`
+      );
     } else {
-      console.error("Failed to send email");
+      toast.error(
+        `httpStatus ${response.status}, ` +
+          " " +
+          `statusText ${response.statusText}, ` +
+          " " +
+          `${response.url}`
+      );
     }
   };
 
   return (
     <div className="p-4 max-w-md mx-auto bg-white rounded-md shadow-md mt-16">
-      <h1 className="text-2xl font-bold mb-4">Simple Mail Application</h1>
+      <ToastContainer />
+      <h1 className="text-2xl font-bold text-red-600 mb-2">
+        Valentine&apos;s Day Mail
+      </h1>
+      <p className="mb-6 text-gray-500 text-sm">
+        By Sittipong Hemloun 6410401183
+      </p>
       <label className="block mb-2 font-bold">Your Email</label>
       <input
         type="email"
         placeholder="From"
-        className=" border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-red-400 focus:outline-none focus:ring focus:border-red-400"
         value={emailSender}
         onChange={(e) => setEmailSender(e.target.value)}
       />
@@ -46,7 +66,7 @@ const SimpleMailApp: React.FC = () => {
       <input
         type="email"
         placeholder="To"
-        className=" border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-red-400 focus:outline-none focus:ring focus:border-red-400"
         value={emailReceiver}
         onChange={(e) => setEmailReceiver(e.target.value)}
       />
@@ -54,19 +74,19 @@ const SimpleMailApp: React.FC = () => {
       <input
         type="text"
         placeholder="Subject"
-        className="border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-red-400 focus:outline-none focus:ring focus:border-red-400"
         value={subject}
         onChange={(e) => setSubject(e.target.value)}
       />
       <label className="block mb-2 font-bold">Message</label>
       <textarea
         placeholder="Message"
-        className="border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+        className="border w-full px-4 py-2 mb-4 rounded-md border-red-400 focus:outline-none focus:ring focus:border-red-400"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       ></textarea>
       <button
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:bg-blue-600"
+        className="w-full px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:bg-red-700"
         onClick={sendMail}
       >
         Send Email
