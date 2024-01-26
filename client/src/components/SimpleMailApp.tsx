@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 
 const SimpleMailApp: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [emailSender, setEmailSender] = useState("");
+  const [emailReceiver, setEmailReceiver] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
@@ -14,7 +15,8 @@ const SimpleMailApp: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: email,
+        from: emailSender,
+        to: emailReceiver,
         subject,
         text: message,
       }),
@@ -30,13 +32,23 @@ const SimpleMailApp: React.FC = () => {
   return (
     <div className="p-4 max-w-md mx-auto bg-white rounded-md shadow-md mt-16">
       <h1 className="text-2xl font-bold mb-4">Simple Mail Application</h1>
-      <label className="block mb-2 font-bold">Email</label>
+      <label className="block mb-2 font-bold">Your Email</label>
       <input
         type="email"
         placeholder="From"
         className=" border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={emailSender}
+        onChange={(e) => setEmailSender(e.target.value)}
+      />
+      <label className="block mb-2 font-bold">
+        Your Loved One&apos;s Email
+      </label>
+      <input
+        type="email"
+        placeholder="To"
+        className=" border w-full px-4 py-2 mb-4 rounded-md border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+        value={emailReceiver}
+        onChange={(e) => setEmailReceiver(e.target.value)}
       />
       <label className="block mb-2 font-bold">Subject</label>
       <input
