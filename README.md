@@ -4,7 +4,7 @@
 ![Alt text](mail-client.png)
 ![Alt text](wireshark.png)
 
-## วัตถุประสงค์ของโปรแกรม
+## วัตถุประสงค์
 
 เพื่อบอกรักแฟนผ่าน mail ที่สวยงามในวัน valentine และส่งความรักให้คนพิเศษที่เรารัก
 
@@ -15,7 +15,7 @@
 
 ## การใช้งานของ Transport Layer
 
-ใช้ Transport Layer แบบ TCP (Transmission Control Protocol) เนื่องจาก TCP มีความเสถียรและนิ่งที่สูง และเหมาะสมสำหรับการส่งข้อมูลแบบเชื่อมต่อที่ต้องการความเชื่อถือและความแม่นยำ
+ใช้ Transport Layer แบบ TCP (Transmission Control Protocol) เนื่องจาก TCP มีความเสถียรและนิ่งที่สูง และเหมาะสมสำหรับการส่งข้อมูลที่ต้องการความเชื่อถือ เช่น เมล
 
 ```javascript
 // สร้าง Nodemailer transporter object พร้อมกับการกำหนดค่า SMTP
@@ -53,7 +53,7 @@ const sendMail = (
 
 - ใช้ `SMTP` ในการส่งอีเมล โดยใช้ Nodemailer เป็นโมดูลที่ใช้ส่งอีเมล และใช้ Gmail SMTP server เป็น SMTP server เนื่องจาก Gmail SMTP server มีความเสถียรและนิ่งที่สูง และเหมาะสมสำหรับการส่งข้อมูลแบบเชื่อมต่อที่ต้องการความเชื่อถือและความแม่นยำ
 - ใช้ `DNS` ในการแปลงชื่อโดเมนเป็นที่อยู่ IP ของเซิร์ฟเวอร์ เนื่องจากโปรแกรมนี้ใช้ Gmail SMTP server ซึ่งมีที่อยู่ IP คงที่ และใช้ชื่อโดเมนเป็น smtp.gmail.com
-- ใช้ `HTTP` ในการสื่อสารระหว่าง Client และ Server เนื่องจาก HTTP มีความเป็นสถานะ (stateless) และเป็นโปรโตคอลที่มีความเป็นที่นิยมในการสื่อสารระหว่าง Client และ Server ในปัจจุบัน
+- ใช้ `HTTP` ในการสื่อสารระหว่าง Client และ Server เนื่องจาก HTTP มีความเป็น stateless และเป็นโปรโตคอลที่มีความเป็นที่นิยมในการสื่อสารระหว่าง Client และ Server ในปัจจุบัน
 
 ### รูปแบบข้อความ (Message Format)
 
@@ -82,7 +82,7 @@ const sendMail = (
   }
   ```
 
-โปรโตคอลที่ออกแบบมาเพื่อใช้สื่อสารระหว่าง Client และ Server ในโปรแกรมนี้ชื่อ "SimpleMailProtocol"
+ชื่อ Protocol: "SMTP ส่งรักส่งเลิฟ"
 
 ## การใช้งานด้วย docker
 
@@ -95,7 +95,7 @@ const sendMail = (
    cd simple-mail-wireshark/server
    cp .env.example .env
    ```
-   แก้ไขไฟล์ `.env` ให้ตรงกับของคุณ
+   แก้ไขไฟล์ `.env`
    ```bash
    # .env
    GMAIL_APP_PASSWORD=your_gmail_app_password
@@ -127,7 +127,7 @@ const sendMail = (
    cd simple-mail-wireshark/server
    cp .env.example .env
    ```
-   แก้ไขไฟล์ `.env` ให้ตรงกับของคุณ
+   แก้ไขไฟล์ `.env`
    ```bash
    # .env
    GMAIL_APP_PASSWORD=your_gmail_app_password
