@@ -1,7 +1,5 @@
 # Valentine&apos;s Day Mail
 
-สิทธิพงค์ เหมล้วน 6410401183
-
 ![Alt text](inbox.png)
 ![Alt text](mail-client.png)
 ![Alt text](wireshark.png)
@@ -18,6 +16,7 @@
 ## การใช้งานของ Transport Layer
 
 ใช้ Transport Layer แบบ TCP (Transmission Control Protocol) เนื่องจาก TCP มีความเสถียรและนิ่งที่สูง และเหมาะสมสำหรับการส่งข้อมูลแบบเชื่อมต่อที่ต้องการความเชื่อถือและความแม่นยำ
+
 ```javascript
 // สร้าง Nodemailer transporter object พร้อมกับการกำหนดค่า SMTP
 const transporter = nodemailer.createTransport({
@@ -57,64 +56,89 @@ const sendMail = (
 - ใช้ `HTTP` ในการสื่อสารระหว่าง Client และ Server เนื่องจาก HTTP มีความเป็นสถานะ (stateless) และเป็นโปรโตคอลที่มีความเป็นที่นิยมในการสื่อสารระหว่าง Client และ Server ในปัจจุบัน
 
 ### รูปแบบข้อความ (Message Format)
-  - **SEND_MAIL**: ข้อความสำหรับส่งอีเมล์ ประกอบด้วยข้อมูลเช่น ผู้ส่ง, ผู้รับ, หัวข้อเรื่อง, และข้อความ
-    ```javascript
-    class Mail {
-      constructor(
-        public from: string,
-        public to: string,
-        public subject: string,
-        public message: string
-      ) {}
-    }
-    ```
 
-  - **NOTIFICATION**: ข้อความแจ้งเตือนการส่งอีเมล์สำเร็จหรือไม่สำเร็จ สถานะ (Status Code, Status Phrase)
-    ```javascript
-    try {
-      const info = await sendMail(mailOptions);
-      res.status(200).send("Email sent: " + info.response);
-      console.log("Email sent: " + info.response);
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).send(error.toString());
-    }
-    ```
+- **SEND_MAIL**: ข้อความสำหรับส่งอีเมล์ ประกอบด้วยข้อมูลเช่น ผู้ส่ง, ผู้รับ, หัวข้อเรื่อง, และข้อความ
 
-  
+  ```javascript
+  class Mail {
+    constructor(
+      public from: string,
+      public to: string,
+      public subject: string,
+      public message: string
+    ) {}
+  }
+  ```
+
+- **NOTIFICATION**: ข้อความแจ้งเตือนการส่งอีเมล์สำเร็จหรือไม่สำเร็จ สถานะ (Status Code, Status Phrase)
+  ```javascript
+  try {
+    const info = await sendMail(mailOptions);
+    res.status(200).send("Email sent: " + info.response);
+    console.log("Email sent: " + info.response);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send(error.toString());
+  }
+  ```
+
 โปรโตคอลที่ออกแบบมาเพื่อใช้สื่อสารระหว่าง Client และ Server ในโปรแกรมนี้ชื่อ "SimpleMailProtocol"
 
-## การใช้งาน
+## การใช้งานด้วย docker
+
 1. Clone repository
-    ```bash
-    git clone https://github.com/ong22280/simple-mail-wireshark.git
-    ```
+   ```bash
+   git clone https://github.com/ong22280/simple-mail-wireshark.git
+   ```
+2. กำหนดค่าตัวแปร environment ในไฟล์ `.env`
+   ```bash
+   cd simple-mail-wireshark/server
+   cp .env.example .env
+   ```
+   แก้ไขไฟล์ `.env` ให้ตรงกับของคุณ
+   ```bash
+   # .env
+   GMAIL_APP_PASSWORD=your_gmail_app_password
+   ```
+3. Run docker-compose
+   ```bash
+   cd simple-mail-wireshark
+   docker-compose up
+   ```
+4. เข้าถึงแอปพลิเคชันผ่าน URL: `http://localhost:3001` หรือ <a href="https://mail-client-ong22280.vercel.app/" target="_blank">https://mail-client-ong22280.vercel.app/</a>
+
+## การใช้งานหากไม่ใช้ docker
+
+1. Clone repository
+   ```bash
+   git clone https://github.com/ong22280/simple-mail-wireshark.git
+   ```
 2. ติดตั้ง dependencies ของ client และ server
-    ```bash
-    cd simple-mail-wireshark/client
-    npm install
-    ```
-    ```bash
-    cd simple-mail-wireshark/server
-    npm install
-    ```
+   ```bash
+   cd simple-mail-wireshark/client
+   npm install
+   ```
+   ```bash
+   cd simple-mail-wireshark/server
+   npm install
+   ```
 3. กำหนดค่าตัวแปร environment ในไฟล์ `.env`
-    ```bash
-    cd simple-mail-wireshark/server
-    cp .env.example .env
-    ```
-    แก้ไขไฟล์ `.env` ให้ตรงกับของคุณ
-    ```bash
-    # .env
-    GMAIL_APP_PASSWORD=your_gmail_app_password
-    ```
+   ```bash
+   cd simple-mail-wireshark/server
+   cp .env.example .env
+   ```
+   แก้ไขไฟล์ `.env` ให้ตรงกับของคุณ
+   ```bash
+   # .env
+   GMAIL_APP_PASSWORD=your_gmail_app_password
+   ```
 4. เริ่มต้นแอปพลิเคชัน
-    ```bash
-    cd simple-mail-wireshark/server
-    npm start
-    ```
-    ```bash
-    cd simple-mail-wireshark/client
-    npm run dev
-    ```
-5. เข้าถึงแอปพลิเคชันผ่าน URL: `http://localhost:3001`
+   ```bash
+   cd simple-mail-wireshark/server
+   npm start
+   ```
+   ```bash
+   cd simple-mail-wireshark/client
+   npm run dev
+   ```
+5. เข้าถึงแอปพลิเคชันผ่าน URL: `http://localhost:3001` หรือ <a href="https://mail-client-ong22280.vercel.app/" target="_blank">https://mail-client-ong22280.vercel.app/</a>
